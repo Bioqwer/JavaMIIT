@@ -1,6 +1,5 @@
 package lab2;
 
-
 public class Vector {
     public static final int MIN_VECTOR_SIZE = 0;
     private int[] array;
@@ -49,5 +48,55 @@ public class Vector {
             if (array[i]>max)
                 max  = array[i];
         return max;
+    }
+
+    public void sortUp(){
+        int min, temp;
+
+        for (int index = 0; index < array.length-1; index++){
+            min = index;
+            for (int scan = index+1; scan < array.length; scan++)
+                if (array[scan] < array[min])
+                    min = scan;
+
+            // Swap the values
+            temp = array[min];
+            array[min] = array[index];
+            array[index] = temp;
+        }
+    }
+
+    public double euclideanNorm(){
+        double result=0;
+        for (int i=0;i<array.length;i++){
+            result+=array[i]*array[i];
+        }
+        result = Math.sqrt(result);
+        return result;
+    }
+
+    public void multiplicationToNumber(int number){
+        for(int i=0;i<array.length;i++)
+            array[i]*=number;
+    }
+
+    public Vector additionVector(Vector vector)
+    {
+        if(array.length!=vector.getVectorSize())
+            return new Vector(0);
+        Vector result = new Vector(array.length);
+        for (int i=0;i<array.length;i++)
+            result.setElement(i,array[i]+vector.getElement(i));
+        return result;
+    }
+
+    public int getScalar(Vector vector)
+    {
+        if(array.length!=vector.getVectorSize())
+            return 0;
+        int result = 0;
+        for (int i=0;i<array.length;i++)
+           result+=array[i]*vector.getElement(i);
+        return result;
     }
 }
