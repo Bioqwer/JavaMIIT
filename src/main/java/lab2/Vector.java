@@ -18,8 +18,7 @@ public class Vector {
     public void setElement(int number, int element) {
         if (number < MIN_VECTOR_SIZE || number >= array.length) {
             array[number] = 0;
-        }
-        else
+        } else
             array[number] = element;
     }
 
@@ -34,28 +33,29 @@ public class Vector {
             array = new int[MIN_VECTOR_SIZE];
     }
 
-    public int getMinElement(){
+    public int getMinElement() {
         int min = array[0];
-        for (int i=0;i<array.length;i++)
-            if (array[i]<min)
+        for (int i = 0; i < array.length; i++)
+            if (array[i] < min)
                 min = array[i];
         return min;
     }
 
-    public int getMaxElement(){
+    public int getMaxElement() {
         int max = array[0];
-        for (int i=0;i<array.length;i++)
-            if (array[i]>max)
-                max  = array[i];
+        for (int i = 0; i < array.length; i++)
+            if (array[i] > max)
+                max = array[i];
         return max;
     }
 
-    public void sortUp(){
+    public void sortUp()  //сортировка выбором
+    {
         int min, temp;
 
-        for (int index = 0; index < array.length-1; index++){
+        for (int index = 0; index < array.length - 1; index++) {
             min = index;
-            for (int scan = index+1; scan < array.length; scan++)
+            for (int scan = index + 1; scan < array.length; scan++)
                 if (array[scan] < array[min])
                     min = scan;
 
@@ -66,37 +66,35 @@ public class Vector {
         }
     }
 
-    public double euclideanNorm(){
-        double result=0;
-        for (int i=0;i<array.length;i++){
-            result+=array[i]*array[i];
+    public double euclideanNorm() {
+        double result = 0;
+        for (int i = 0; i < array.length; i++) {
+            result += array[i] * array[i];
         }
         result = Math.sqrt(result);
         return result;
     }
 
-    public void multiplicationToNumber(int number){
-        for(int i=0;i<array.length;i++)
-            array[i]*=number;
+    public void multiplicationToNumber(int number) {
+        for (int i = 0; i < array.length; i++)
+            array[i] *= number;
     }
 
-    public Vector additionVector(Vector vector)
-    {
-        if(array.length!=vector.getVectorSize())
+    public Vector additionVector(Vector vector) {
+        if (array.length != vector.getVectorSize())
             return new Vector(0);
         Vector result = new Vector(array.length);
-        for (int i=0;i<array.length;i++)
-            result.setElement(i,array[i]+vector.getElement(i));
+        for (int i = 0; i < array.length; i++)
+            result.setElement(i, array[i] + vector.getElement(i));
         return result;
     }
 
-    public int getScalar(Vector vector)
-    {
-        if(array.length!=vector.getVectorSize())
+    public int getScalar(Vector vector) {
+        if (array.length != vector.getVectorSize())
             return 0;
         int result = 0;
-        for (int i=0;i<array.length;i++)
-           result+=array[i]*vector.getElement(i);
+        for (int i = 0; i < array.length; i++)
+            result += array[i] * vector.getElement(i);
         return result;
     }
 }

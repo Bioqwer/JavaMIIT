@@ -1,11 +1,11 @@
 package lab1.MyFirstPackage;
 
-public class MySecondClass{
-//    •	имеет два приватных поля типа int;
+public class MySecondClass {
+    //    •	имеет два приватных поля типа int;
 //    •	методы для получения и модификации их значений;
 //    •	конструктор, создающий объект и инициализирующий значения полей;
 //    •	метод с возвращаемым типом int, реализующий над этими числами какое-нибудь действие (сложение, умножение и т.д.).
-    private int firstVar ,secondVar;
+    private int firstVar, secondVar;
 
     public MySecondClass(int firstVar, int secondVar) {
         this.firstVar = firstVar;
@@ -28,12 +28,11 @@ public class MySecondClass{
         this.secondVar = secondVar;
     }
 
-    public int plus()
-    {
-        return firstVar+secondVar;
+    public int plus() {
+        return firstVar + secondVar;
     }
 
-    public int multiply(){
-        return firstVar*secondVar;
+    public int multiply() {
+        return firstVar * secondVar;
     }
 }
