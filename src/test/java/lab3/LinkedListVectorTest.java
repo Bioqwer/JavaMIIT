@@ -1,9 +1,8 @@
 package lab3;
 
 import junit.framework.TestCase;
+import lab3.vectors.LinkedListVector;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class LinkedListVectorTest extends TestCase {
 
@@ -53,6 +52,7 @@ public class LinkedListVectorTest extends TestCase {
         assertEquals(Math.sqrt(30),linkedListVector.euclideanNorm());
     }
 
+    @Test
     public void testDeleteElement() throws Exception {
         LinkedListVector linkedListVector = new LinkedListVector();
         for (int i = 0; i<5;i++)

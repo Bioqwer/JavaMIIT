@@ -1,9 +1,9 @@
-package lab3;
+package lab3.vectors;
 
 /**
  * Created by Antony on 02.08.2014.
  */
-public class ArrayVector {
+public class ArrayVector implements Vector{
     public static final int MIN_VECTOR_SIZE = 0;
     private int[] array;
 

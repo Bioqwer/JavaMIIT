@@ -1,6 +1,8 @@
-package lab3;
+package lab3.vectors;
 
-public class LinkedListVector {
+import lab3.VectorIndexOutOfBoundsException;
+
+public class LinkedListVector implements Vector {
     public static final int MIN_VECTOR_SIZE = 0;
     private Element head;
     private Element tail;
@@ -23,7 +25,7 @@ public class LinkedListVector {
 
     public int getElement(int number) {
         if (number >= getVectorSize() || number < MIN_VECTOR_SIZE)
-            return 0;
+            throw new VectorIndexOutOfBoundsException();
         Element current = head;
         for (int i = -1; i < number; i++)
             current = current.getNext();
@@ -31,8 +33,8 @@ public class LinkedListVector {
     }
 
     public void setElement(int number, int data) {
-        if (number > getVectorSize() || number < MIN_VECTOR_SIZE)
-            return;
+        if (number >= getVectorSize() || number < MIN_VECTOR_SIZE)
+            throw new VectorIndexOutOfBoundsException();
         Element current = head;
         for (int i = -1; i < number; i++)
             current = current.getNext();
@@ -50,8 +52,8 @@ public class LinkedListVector {
     }
 
     public void deleteElement(int number) {
-        if (number > getVectorSize() || number < MIN_VECTOR_SIZE)
-            throw new VectorIndexOutOfBoundsException("Illegal number") ;
+        if (number >= getVectorSize() || number < MIN_VECTOR_SIZE)
+            throw new VectorIndexOutOfBoundsException();
         Element current = head;
         for (int i = -1; i < number; i++)
             current = current.getNext();
