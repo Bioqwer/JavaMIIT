@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ExceptionsTest {
 
     @Test(expected = VectorIndexOutOfBoundsException.class)
-    public void testVectorIndexOutOfBoundsException(){
+    public void testVectorIndexOutOfBoundsException() {
         LinkedListVector linkedListVector = new LinkedListVector();
 
         linkedListVector.addElement(1);

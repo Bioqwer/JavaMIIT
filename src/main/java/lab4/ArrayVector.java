@@ -1,9 +1,12 @@
-package lab3.vectors;
+package lab4;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by Antony on 02.08.2014.
  */
-public class ArrayVector implements Vector {
+public class ArrayVector implements Vector,Serializable {
     public static final int MIN_VECTOR_SIZE = 0;
     private int[] array;
 
@@ -44,5 +47,12 @@ public class ArrayVector implements Vector {
         }
         result = Math.sqrt(result);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayVector{" +
+                "array=" + Arrays.toString(array) +
+                '}';
     }
 }

@@ -1,8 +1,10 @@
-package lab3.vectors;
+package lab4;
 
 import lab3.VectorIndexOutOfBoundsException;
 
-public class LinkedListVector implements Vector {
+import java.io.Serializable;
+
+public class LinkedListVector implements Vector,Serializable {
     public static final int MIN_VECTOR_SIZE = 0;
     private Element head;
     private Element tail;
@@ -10,6 +12,12 @@ public class LinkedListVector implements Vector {
     public LinkedListVector() {
         head = null;
         tail = null;
+    }
+
+    public LinkedListVector(int size) {
+        this();
+        for (int i = 0; i < size; i++)
+            addElement(0);
     }
 
     public void addElement(int data) {
@@ -80,7 +88,16 @@ public class LinkedListVector implements Vector {
         return result;
     }
 
-    class Element {
+    @Override
+    public String toString() {
+        String result = "LinkedListVector{";
+        Element current = head;
+        for (int i=0;i<getVectorSize();i++)
+            result += this.getElement(i) + " ";
+        return result += "}";
+    }
+
+    class Element implements Serializable {
         private int field;
         private Element prev;
         private Element next;
