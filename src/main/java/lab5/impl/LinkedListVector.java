@@ -1,8 +1,12 @@
-package lab3.vectors;
+package lab5.impl;
 
 import lab3.VectorIndexOutOfBoundsException;
+import lab5.Vector;
 
-public class LinkedListVector implements Vector {
+import java.io.Serializable;
+import java.util.Iterator;
+
+public class LinkedListVector implements Vector,Serializable {
     public static final int MIN_VECTOR_SIZE = 0;
     private Element head;
     private Element tail;
@@ -10,6 +14,12 @@ public class LinkedListVector implements Vector {
     public LinkedListVector() {
         head = null;
         tail = null;
+    }
+
+    public LinkedListVector(int size) {
+        this();
+        for (int i = 0; i < size; i++)
+            addElement(0);
     }
 
     public void addElement(int data) {
@@ -52,10 +62,10 @@ public class LinkedListVector implements Vector {
     }
 
     public void deleteElement(int number) {
-        if (number >= getVectorSize() || number < MIN_VECTOR_SIZE)
+        if (number > getVectorSize() && number < MIN_VECTOR_SIZE)
             throw new VectorIndexOutOfBoundsException();
         Element current = head;
-        for (int i = 0; i < number; i++)
+        for (int i = -1; i < number; i++)
             current = current.getNext();
         if (current == head) {
             head = current.getNext();
@@ -80,7 +90,15 @@ public class LinkedListVector implements Vector {
         return result;
     }
 
-    class Element {
+    @Override
+    public String toString() {
+        String result = "LinkedListVector{";
+        for (int i=0;i<getVectorSize();i++)
+            result += this.getElement(i) + " ";
+        return result += "}";
+    }
+
+    class Element implements Serializable {
         private int field;
         private Element prev;
         private Element next;
@@ -114,5 +132,35 @@ public class LinkedListVector implements Vector {
         public void setNext(Element next) {
             this.next = next;
         }
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedListVectorIterator();
+    }
+    private class LinkedListVectorIterator implements Iterator {
+        int index=0;
+        @Override
+        public Object next() {
+            return getElement(index++);
+        }
+
+        @Override
+        public boolean hasNext() {
+            if(index<getVectorSize())
+                return true;
+            else
+                return false;
+        }
+
+        @Override
+        public void remove() {
+            if (index != 0)
+                index--;
+            if (index >= 0 && index < getVectorSize()) {
+                deleteElement(index);
+            }
+        }
+
     }
 }
