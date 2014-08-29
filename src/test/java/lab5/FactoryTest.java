@@ -3,8 +3,6 @@ package lab5;
 import lab5.impl.ArrayVector;
 import lab5.impl.Vectors;
 
-import static org.junit.Assert.*;
-
 public class FactoryTest {
 
     public static void main(String[] args) {

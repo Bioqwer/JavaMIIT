@@ -2,10 +2,7 @@ package lab4;
 
 import java.io.*;
 
-import static lab4.Vectors.inputVector;
-import static lab4.Vectors.readVector;
-import static lab4.Vectors.writeVector;
-import static org.junit.Assert.*;
+import static lab4.Vectors.*;
 
 public class MainTest {
 
@@ -99,9 +96,9 @@ public class MainTest {
             stream.close();
             fileOutputStream.close();
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch (IOException e)
-        { e.printStackTrace();}
         //Чтение
         System.out.println("MainTest.Сериализация.Чтение");
         try {
@@ -114,12 +111,12 @@ public class MainTest {
 
             FileInputStream fileInputStream = new FileInputStream("SerializableLinkVector.txt");
             ObjectInputStream inputStream2 = new ObjectInputStream(fileInputStream);
-            LinkedListVector result =(LinkedListVector) inputStream2.readObject();
+            LinkedListVector result = (LinkedListVector) inputStream2.readObject();
             System.out.println(result);
             inputStream2.close();
             fileInputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        catch (IOException|ClassNotFoundException e)
-        { e.printStackTrace();}
     }
 }

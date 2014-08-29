@@ -6,7 +6,7 @@ import lab5.Vector;
 import java.io.Serializable;
 import java.util.Iterator;
 
-public class LinkedListVector implements Vector,Serializable {
+public class LinkedListVector implements Vector, Serializable {
     public static final int MIN_VECTOR_SIZE = 0;
     private Element head;
     private Element tail;
@@ -93,9 +93,14 @@ public class LinkedListVector implements Vector,Serializable {
     @Override
     public String toString() {
         String result = "LinkedListVector{";
-        for (int i=0;i<getVectorSize();i++)
+        for (int i = 0; i < getVectorSize(); i++)
             result += this.getElement(i) + " ";
         return result += "}";
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedListVectorIterator();
     }
 
     class Element implements Serializable {
@@ -134,12 +139,9 @@ public class LinkedListVector implements Vector,Serializable {
         }
     }
 
-    @Override
-    public Iterator iterator() {
-        return new LinkedListVectorIterator();
-    }
     private class LinkedListVectorIterator implements Iterator {
-        int index=0;
+        int index = 0;
+
         @Override
         public Object next() {
             return getElement(index++);
@@ -147,7 +149,7 @@ public class LinkedListVector implements Vector,Serializable {
 
         @Override
         public boolean hasNext() {
-            if(index<getVectorSize())
+            if (index < getVectorSize())
                 return true;
             else
                 return false;

@@ -6,7 +6,7 @@ import lab6.Vector;
 import java.io.Serializable;
 import java.util.Iterator;
 
-public class LinkedListVector implements Vector,Serializable,Cloneable {
+public class LinkedListVector implements Vector, Serializable, Cloneable {
     public static final int MIN_VECTOR_SIZE = 0;
     private Element head;
     private Element tail;
@@ -93,7 +93,7 @@ public class LinkedListVector implements Vector,Serializable,Cloneable {
     @Override
     public String toString() {
         String result = "LinkedListVector{";
-        for (int i=0;i<getVectorSize();i++)
+        for (int i = 0; i < getVectorSize(); i++)
             result += this.getElement(i) + " ";
         return result += "}";
     }
@@ -105,11 +105,11 @@ public class LinkedListVector implements Vector,Serializable,Cloneable {
 
         LinkedListVector that = (LinkedListVector) o;
 
-        if (this.getVectorSize()!=that.getVectorSize())
+        if (this.getVectorSize() != that.getVectorSize())
             return false;
 
         for (int i = 0; i < getVectorSize(); i++) {
-            if(this.getElement(i)!=that.getElement(i))
+            if (this.getElement(i) != that.getElement(i))
                 return false;
         }
 
@@ -119,7 +119,7 @@ public class LinkedListVector implements Vector,Serializable,Cloneable {
     @Override
     public int hashCode() {
         int result = 1;
-        for (int i =0; i < getVectorSize(); i++) {
+        for (int i = 0; i < getVectorSize(); i++) {
             result = 31 * result + getElement(i);
         }
         return result;
@@ -127,11 +127,16 @@ public class LinkedListVector implements Vector,Serializable,Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-       LinkedListVector clone = new LinkedListVector(getVectorSize());
+        LinkedListVector clone = new LinkedListVector(getVectorSize());
         for (int i = 0; i < getVectorSize(); i++) {
-            clone.setElement(i,this.getElement(i));
+            clone.setElement(i, this.getElement(i));
         }
         return clone;
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedListVectorIterator();
     }
 
     class Element implements Serializable {
@@ -170,12 +175,9 @@ public class LinkedListVector implements Vector,Serializable,Cloneable {
         }
     }
 
-    @Override
-    public Iterator iterator() {
-        return new LinkedListVectorIterator();
-    }
     private class LinkedListVectorIterator implements Iterator {
-        int index=0;
+        int index = 0;
+
         @Override
         public Object next() {
             return getElement(index++);
@@ -183,7 +185,7 @@ public class LinkedListVector implements Vector,Serializable,Cloneable {
 
         @Override
         public boolean hasNext() {
-            if(index<getVectorSize())
+            if (index < getVectorSize())
                 return true;
             else
                 return false;

@@ -12,11 +12,7 @@ public class Vectors {
 
     private static lab6.VectorFactory vectorFactory = new VectorFactory();
 
-    public void setVectorFactory(lab6.VectorFactory vectorFactory) {
-        this.vectorFactory = vectorFactory;
-    }
-
-    public static Vector createInstance(int size){
+    public static Vector createInstance(int size) {
         return vectorFactory.createVector(size);
     }
 
@@ -52,7 +48,6 @@ public class Vectors {
         } catch (IOException e) {
         }
     }
-
 
     public static void writeVector(Vector v, Writer out) {
         try {
@@ -103,6 +98,10 @@ public class Vectors {
         } catch (IOException e) {
         }
         return null;
+    }
+
+    public void setVectorFactory(lab6.VectorFactory vectorFactory) {
+        this.vectorFactory = vectorFactory;
     }
 
 

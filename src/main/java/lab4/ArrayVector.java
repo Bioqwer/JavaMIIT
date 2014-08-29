@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Created by Antony on 02.08.2014.
  */
-public class ArrayVector implements Vector,Serializable {
+public class ArrayVector implements Vector, Serializable {
     public static final int MIN_VECTOR_SIZE = 0;
     private int[] array;
 

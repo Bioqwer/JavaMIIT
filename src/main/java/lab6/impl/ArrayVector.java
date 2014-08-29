@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * Created by Antony on 02.08.2014.
  */
-public class ArrayVector implements Vector,Serializable,Cloneable {
+public class ArrayVector implements Vector, Serializable, Cloneable {
     public static final int MIN_VECTOR_SIZE = 0;
     private int[] array;
 
@@ -81,7 +81,7 @@ public class ArrayVector implements Vector,Serializable,Cloneable {
     protected Object clone() throws CloneNotSupportedException {
         ArrayVector clone = new ArrayVector(getVectorSize());
         for (int i = 0; i < getVectorSize(); i++) {
-            clone.setElement(i,this.getElement(i));
+            clone.setElement(i, this.getElement(i));
         }
         return clone;
     }
@@ -91,11 +91,12 @@ public class ArrayVector implements Vector,Serializable,Cloneable {
         return new ArrayVectorIterator();
     }
 
-    private class ArrayVectorIterator implements Iterator{
-        private int index=0;
+    private class ArrayVectorIterator implements Iterator {
+        private int index = 0;
+
         @Override
         public boolean hasNext() {
-            if(index<getVectorSize())
+            if (index < getVectorSize())
                 return true;
             else return false;
         }
@@ -107,16 +108,16 @@ public class ArrayVector implements Vector,Serializable,Cloneable {
 
         @Override
         public void remove() {
-            if(index!=0)
+            if (index != 0)
                 index--;
-            int[] temp = new int[getVectorSize()-1];
-            int j=0;
-            for(int i=0 ; i<index&&i<temp.length ; i++)
-                temp[j++]=getElement(i);
-            for(int i=index+1 ; i<getVectorSize() ; i++)
-                temp[j++]=getElement(i);
+            int[] temp = new int[getVectorSize() - 1];
+            int j = 0;
+            for (int i = 0; i < index && i < temp.length; i++)
+                temp[j++] = getElement(i);
+            for (int i = index + 1; i < getVectorSize(); i++)
+                temp[j++] = getElement(i);
 
-            array=temp;
+            array = temp;
         }
     }
 }
