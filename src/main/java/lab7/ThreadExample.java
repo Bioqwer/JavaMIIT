@@ -3,6 +3,8 @@ package lab7;
 import lab6.Vector;
 import lab6.impl.ArrayVector;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -43,6 +45,5 @@ public class ThreadExample {
             write(vector, i);
             read(vector, i);
         }
-
     }
 }
