@@ -82,9 +82,50 @@ public class Aggregate {
 
     }
 
+    /**
+     *
+     * @param matrix Матрица прямых затрат
+     * @param aggregate Вектор агрегирования
+     * @param x Vector x
+     * @return Result of aggregation matrix
+     */
+    public static double[][] aggregate(double[][] matrix, int[][] aggregate, double[] x) {
+        int n = aggregate.length;
+        double[][] b = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                b[i][j]=getB(matrix, aggregate,x,i,j);
+            }
+        }
+        return b;
+    }
+
+    /**
+     *
+     * @param a Матрица прямых затрат
+     * @param I Вектор агрегирования
+     * @param x Vector x
+     * @param i_index Position element in cols
+     * @param j_index Position element in rows
+     * @return Return result of function
+     */
+    public static double getB(double[][] a, int[][] I, double[] x, int i_index, int j_index) {
+        double result=0;
+        double tempX = 0;
+        for (int i = 0; i < I[i_index].length; i++) {
+            for (int j = 0; j < I[j_index].length; j++) {
+                result += a[I[i_index][i]][I[j_index][j]]*x[I[j_index][j]];
+                //System.out.println("a["+I[i_index][i]+"]["+I[j_index][j]+"]*x["+I[j_index][j]+"] = " + result);
+            }
+        }
+        for (int j = 0; j < I[j_index].length; j++) {
+            tempX+=x[I[j_index][j]];
+        }
+        return result/tempX;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         double[][] matrix;
-
         //Чтение файла
         String textFromFile = read("data.txt");
         matrix = parse(textFromFile);
@@ -95,37 +136,9 @@ public class Aggregate {
         System.out.println("agregate[0].length = " + agregate[0].length);
         System.out.println("agregate[1].length = " + agregate[1].length);
 
-        matrix = agregate(matrix, agregate,x);
+        matrix = aggregate(matrix, agregate, x);
 
         System.out.println("Matrix After");
         matrixToString(matrix);
     }
-
-    private static double[][] agregate(double[][] matrix, int[][] agregate, double[] x) {
-        int n = agregate.length;
-        double[][] b = new double[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                b[i][j]=getB(matrix,agregate,x,i,j);
-            }
-        }
-        return b;
-    }
-
-    private static double getB(double[][] a, int[][] I, double[] x, int i_index, int j_index) {
-        double result=0;
-        double tempX = 0;
-        for (int i = 0; i < I[i_index].length; i++) {
-            for (int j = 0; j < I[j_index].length; j++) {
-                result = a[I[i_index][i]][I[j_index][j]]*x[I[j_index][j]];
-                //System.out.println("a[I[i_index][i]][I[j_index][j]]*x[I[j_index][j]] = " + result);
-            }
-        }
-        for (int j = 0; j < I[j_index].length; j++) {
-            tempX+=x[I[j_index][j]];
-        }
-        return result/tempX;
-    }
-
-
 }
