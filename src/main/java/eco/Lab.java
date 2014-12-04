@@ -17,7 +17,7 @@ public class Lab {
 
         try {
             //Объект для чтения файла в буфер
-            BufferedReader in = new BufferedReader(new FileReader( fileName));
+            BufferedReader in = new BufferedReader(new FileReader(fileName));
             try {
                 //В цикле построчно считываем файл
                 String s;
@@ -29,28 +29,42 @@ public class Lab {
                 //Также не забываем закрыть файл
                 in.close();
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         //Возвращаем полученный текст с файла
         return sb.toString();
     }
 
-    public static double[][] parse(String text)
-    {
-        int n=7;
-        double[][] result = new double[n][n];
-        StringTokenizer lines = new StringTokenizer(text,"\n");
-        int i=0;
-        while (lines.hasMoreElements())
+    public static double[][] parse(String text) {
+        int n;
+        int m = 0;
         {
+            StringTokenizer lines = new StringTokenizer(text, "\n");
+            int i = 0;
+            while (lines.hasMoreElements()) {
+                String line = lines.nextToken();
+                StringTokenizer digit = new StringTokenizer(line, "\t");
+                int j = 0;
+                while (digit.hasMoreElements()) {
+                    String stDigit = digit.nextToken();
+                    j++;
+                }
+                m=j;
+                i++;
+            }
+            n=i;
+        }
+        double[][] result = new double[n][m];
+        StringTokenizer lines = new StringTokenizer(text, "\n");
+        int i = 0;
+        while (lines.hasMoreElements()) {
             String line = lines.nextToken();
-            StringTokenizer digit = new StringTokenizer(line,"\t");
-            int j=0;
-            while (digit.hasMoreElements())
-            {
+            StringTokenizer digit = new StringTokenizer(line, "\t");
+            int j = 0;
+            while (digit.hasMoreElements()) {
                 String stDigit = digit.nextToken();
-                result[i][j]=Double.parseDouble(stDigit);
+                result[i][j] = Double.parseDouble(stDigit);
                 j++;
             }
             i++;
@@ -58,17 +72,14 @@ public class Lab {
         return result;
     }
 
-    public static String matrixToString(double[][] matrix)
-    {
-        StringBuilder result = new StringBuilder();
+    public static void matrixToString(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                result.append(matrix[i][j]);
-                result.append("\t");
+                System.out.format("%.5f ", matrix[i][j]);
             }
-            result.append("\n");
+            System.out.format("%n");
         }
-        return result.toString();
+
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -77,35 +88,43 @@ public class Lab {
         //Чтение файла
         String textFromFile = read("data.txt");
         matrix = parse(textFromFile);
-        int[] exception = {0,6};
+        int[][] agregate = {{0,3},{1},{2},{4},{5},{6}};
+        double[] x = {1,2,3,4,5,6,7};
         System.out.println("Matrix Before");
-        System.out.println(matrixToString(matrix));
+        matrixToString(matrix);
+        System.out.println("agregate[0].length = " + agregate[0].length);
+        System.out.println("agregate[1].length = " + agregate[1].length);
 
-        matrix = exceptionFromA(matrix,exception);
+        matrix = agregate(matrix, agregate,x);
 
         System.out.println("Matrix After");
-        System.out.println(matrixToString(matrix));
+        matrixToString(matrix);
     }
 
-    private static int change(int a) {
-        a=0;
-        return a;
-    }
-
-    private static double[][] exceptionFromA(double[][] matrix, int[] exception) {
-        for (int i = 0; i < exception.length; i++) {
-            matrix = swapCols(matrix,i,exception[i]-i);
+    private static double[][] agregate(double[][] matrix, int[][] agregate, double[] x) {
+        int n = agregate.length;
+        double[][] b = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                b[i][j]=getB(matrix,agregate,x,i,j);
+            }
         }
-        return matrix;
+        return b;
     }
 
-    private static double[][] swapCols(double[][] matrix, int step, int except) {
-        int last = matrix.length - step - 1;
-        for (int i = 0; i < matrix.length; i++) {
-            double temp = matrix[except][i];
-            matrix[except][i]= matrix[last][i];
-            matrix[last][i] = temp;
+    private static double getB(double[][] a, int[][] I, double[] x, int i_index, int j_index) {
+        double result=0;
+        double tempX = 0;
+        for (int i = 0; i < I[i_index].length; i++) {
+            for (int j = 0; j < I[j_index].length; j++) {
+                result = a[I[i_index][i]][I[j_index][j]]*x[I[j_index][j]];
+            }
         }
-        return matrix;
+        for (int j = 0; j < I[j_index].length; j++) {
+            tempX+=x[I[j_index][j]];
+        }
+        return result/tempX;
     }
+
+
 }
