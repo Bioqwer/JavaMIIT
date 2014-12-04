@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: Alexsandrov
+Main-Class: JavaSE.lab1.MyFirstClass
+
