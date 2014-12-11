@@ -91,6 +91,7 @@ public class Aggregate {
      */
     public static double[][] aggregate(double[][] matrix, int[][] aggregate, double[] x) {
         int n = aggregate.length;
+        System.out.println("aggregate.length = " + aggregate.length);
         double[][] b = new double[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -129,12 +130,10 @@ public class Aggregate {
         //Чтение файла
         String textFromFile = read("data.txt");
         matrix = parse(textFromFile);
-        int[][] agregate = {{0,3},{1},{2},{4},{5},{6}};
+        int[][] agregate = {{0,1},{3,5},{2},{4},{6}};
         double[] x = {70,20,25,35,50,75,10};
         System.out.println("Matrix Before");
         matrixToString(matrix);
-        System.out.println("agregate[0].length = " + agregate[0].length);
-        System.out.println("agregate[1].length = " + agregate[1].length);
 
         matrix = aggregate(matrix, agregate, x);
 
