@@ -124,7 +124,7 @@ public class Vectors {
     }
 
     public void setVectorFactory(JavaSE.toByte.VectorFactory vectorFactory) {
-        this.vectorFactory = vectorFactory;
+        Vectors.vectorFactory = vectorFactory;
     }
 
 

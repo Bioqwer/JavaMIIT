@@ -102,7 +102,7 @@ public class Vectors {
     }
 
     public void setVectorFactory(VectorFactory vectorFactory) {
-        this.vectorFactory = vectorFactory;
+        Vectors.vectorFactory = vectorFactory;
     }
 
 

@@ -17,18 +17,16 @@ public class Aggregate {
 
         try {
             //Объект для чтения файла в буфер
-            BufferedReader in = new BufferedReader(new FileReader(fileName));
-            try {
+            try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
                 //В цикле построчно считываем файл
                 String s;
                 while ((s = in.readLine()) != null) {
                     sb.append(s);
                     sb.append("\n");
                 }
-            } finally {
-                //Также не забываем закрыть файл
-                in.close();
             }
+            //Также не забываем закрыть файл
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,9 +71,9 @@ public class Aggregate {
     }
 
     public static void matrixToString(double[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.format("%.5f ", matrix[i][j]);
+        for (double[] aMatrix : matrix) {
+            for (double anAMatrix : aMatrix) {
+                System.out.format("%.5f ", anAMatrix);
             }
             System.out.format("%n");
         }
@@ -102,7 +100,7 @@ public class Aggregate {
     }
 
     /**
-     *
+     * Возваращает вектор B по заданой формуле.
      * @param a Матрица прямых затрат
      * @param I Вектор агрегирования
      * @param x Vector x
@@ -130,12 +128,12 @@ public class Aggregate {
         //Чтение файла
         String textFromFile = read("data.txt");
         matrix = parse(textFromFile);
-        int[][] agregate = {{0,1},{3,5},{2},{4},{6}};
+        int[][] aggregate = {{0,1},{3,5},{2},{4},{6}};
         double[] x = {70,20,25,35,50,75,10};
         System.out.println("Matrix Before");
         matrixToString(matrix);
 
-        matrix = aggregate(matrix, agregate, x);
+        matrix = aggregate(matrix, aggregate, x);
 
         System.out.println("Matrix After");
         matrixToString(matrix);

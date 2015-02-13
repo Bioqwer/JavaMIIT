@@ -101,7 +101,7 @@ public class Vectors {
     }
 
     public void setVectorFactory(JavaSE.lab6.VectorFactory vectorFactory) {
-        this.vectorFactory = vectorFactory;
+        Vectors.vectorFactory = vectorFactory;
     }
 
 
