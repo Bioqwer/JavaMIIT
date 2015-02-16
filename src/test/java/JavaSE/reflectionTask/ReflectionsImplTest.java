@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -99,16 +100,21 @@ public class ReflectionsImplTest {
 
     @Test
     public void testGetThrownExceptions() throws Exception {
-
+        System.out.println("reflections.getThrownExceptions = " + Protect.class.getDeclaredMethod("method"));
+        System.out.println(Arrays.toString(ReflectionsImpl.class.getDeclaredMethods()));
+        System.out.println("ReflectionsImpl.class.getDeclaredMethod(\"getFieldValueByName\") = " + ReflectionsImpl.class.getDeclaredMethod("getFieldValueByName",Object.class,String.class));
+        System.out.println("res = "+ reflections.getThrownExceptions(ReflectionsImpl.class.getDeclaredMethod("getFieldValueByName",Object.class,String.class)));
     }
 
     @Test
     public void testGetFooFunctionResultForDefaultConstructedClass() throws Exception {
-
+        System.out.println(Arrays.toString(Reflections.SecretClass.class.getDeclaredConstructors()));
+        System.out.println(Reflections.SecretClass.class.getDeclaredConstructor());
+        System.out.println("reflections.getFooFunctionResultForDefaultConstructedClass() = " + reflections.getFooFunctionResultForDefaultConstructedClass());
     }
 
     @Test
     public void testGetFooFunctionResultForClass() throws Exception {
-
+        System.out.println(reflections.getFooFunctionResultForClass("Const Param","Strings",1,2,34,4));
     }
 }

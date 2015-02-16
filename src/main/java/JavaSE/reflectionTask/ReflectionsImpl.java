@@ -1,6 +1,8 @@
 package JavaSE.reflectionTask;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -10,7 +12,7 @@ import java.util.*;
 public class ReflectionsImpl implements Reflections {
     
     @Override
-    public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException,NullPointerException {
+    public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException{
         if(object==null||fieldName==null)
             throw new NullPointerException();
         else {
@@ -73,16 +75,37 @@ public class ReflectionsImpl implements Reflections {
 
     @Override
     public List<Class> getThrownExceptions(Method method) {
-        return null;
+        ArrayList<Class> result = new ArrayList<>();
+        Collections.addAll(result,method.getExceptionTypes());
+        return result;
     }
 
     @Override
     public String getFooFunctionResultForDefaultConstructedClass() {
+        try {
+            Constructor<SecretClass> constructor = SecretClass.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            SecretClass secretClass = constructor.newInstance();
+            Method foo = SecretClass.class.getDeclaredMethod("foo");
+            foo.setAccessible(true);
+            return (String) foo.invoke(secretClass);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String getFooFunctionResultForClass(String constructorParameter, String string, Integer... integers) {
+        try {
+            Constructor<SecretClass> constructor = SecretClass.class.getConstructor(String.class);
+            SecretClass secretClass = constructor.newInstance(constructorParameter);
+            Method foo = SecretClass.class.getDeclaredMethod("foo",String.class,integers.getClass());
+            foo.setAccessible(true);
+            return (String) foo.invoke(secretClass,string,integers);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
