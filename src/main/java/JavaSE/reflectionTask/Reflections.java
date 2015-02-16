@@ -1,4 +1,4 @@
-package JavaSE.reflection;
+package JavaSE.reflectionTask;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -26,7 +26,7 @@ public interface Reflections {
 	 * @throws NullPointerException если fieldName or object является null-ом
 	 * @return Текущее значение поля
 	 * */
-	public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException,NullPointerException ;
+	public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException ;
 	
 	/**
 	 * Метод возвращает набор имен методов для класса, помеченных идентификатором protected 

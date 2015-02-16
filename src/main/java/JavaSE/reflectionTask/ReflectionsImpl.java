@@ -1,9 +1,8 @@
-package JavaSE.reflection;
+package JavaSE.reflectionTask;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Antony on 13.02.2015.
@@ -27,23 +26,49 @@ public class ReflectionsImpl implements Reflections {
     }
 
     @Override
-    public Set<String> getProtectedMethodNames(Class clazz) {
-        return null;
+    public Set<String> getProtectedMethodNames(Class clazz) throws NullPointerException {
+        HashSet<String> result = new HashSet<>();
+        Method[] methods = clazz.getDeclaredMethods();
+        for (Method method:methods)
+        {
+           if(method.toString().contains("protected"))
+               result.add(method.getName());
+        }
+        return result;
     }
 
     @Override
     public Set<Method> getAllImplementedMethodsWithSupers(Class clazz) {
-        return null;
+        HashSet<Method> result = new HashSet<>();
+        Class temp = clazz;
+        while (temp.getClass().getName().contains(Object.class.getClass().getName()))
+        {
+            Collections.addAll(result, temp.getDeclaredMethods());
+            if(temp.getSuperclass()==null)
+                break;
+            else
+                temp = temp.getSuperclass();
+        }
+        return result;
     }
 
     @Override
     public List<Class> getExtendsHierarchy(Class clazz) {
-        return null;
+        ArrayList<Class> result = new ArrayList<>();
+        for (Class temp = clazz;temp.getClass().getName().contains(Object.class.getClass().getName());temp = temp.getSuperclass())
+        {
+            result.add(temp);
+            if(temp.getSuperclass()==null)
+                break;
+        }
+        return result;
     }
 
     @Override
     public Set<Class> getImplementedInterfaces(Class clazz) {
-        return null;
+        HashSet<Class> result = new HashSet<>();
+        Collections.addAll(result, clazz.getInterfaces());
+        return result;
     }
 
     @Override
