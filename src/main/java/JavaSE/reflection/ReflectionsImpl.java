@@ -1,5 +1,6 @@
 package JavaSE.reflection;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
@@ -10,8 +11,19 @@ import java.util.Set;
 public class ReflectionsImpl implements Reflections {
     
     @Override
-    public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException {
-        return object.getClass().getField(fieldName);
+    public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException,NullPointerException {
+        if(object==null||fieldName==null)
+            throw new NullPointerException();
+        else {
+            Field field = object.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            try {
+                return field.get(object);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            throw new NullPointerException();
+        }
     }
 
     @Override
