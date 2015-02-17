@@ -13,18 +13,15 @@ public class ReflectionsImpl implements Reflections {
     
     @Override
     public Object getFieldValueByName(Object object, String fieldName) throws NoSuchFieldException{
-        if(object==null||fieldName==null)
-            throw new NullPointerException();
-        else {
-            Field field = object.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            try {
-                return field.get(object);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            throw new NullPointerException();
+        Field field = object.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        Object result = new Object();
+        try {
+            result = field.get(object);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
+        return result;
     }
 
     @Override
