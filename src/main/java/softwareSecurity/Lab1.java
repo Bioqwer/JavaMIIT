@@ -1,6 +1,7 @@
 package softwareSecurity;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 /**
  * Created by Antony on 22.03.2015.
@@ -23,9 +24,29 @@ public class Lab1 {
         return res;
     }
 
+    public static int gausLemma(int a, int p)
+    {
+        ArrayList<Integer> ints = new ArrayList<>();
+        int res = 0;
+        for (int i = 0; i < (p - 1) / 2; i++) {
+            ints.add(a * (i + 1));
+            ints.set(i,ints.get(i)%p);
+            if(ints.get(i)>(p-1)/2)
+                ints.set(i,ints.get(i)-p);
+            if(ints.get(i)<0)
+                res++;
+        }
+        if (res%2!=0)
+            return -1;
+        else
+            return 1;
+    }
+
 
     public static void main(String[] args) {
         symbolLejandra(563, 1433);
         symbolLejandra(118, 1433);
+        System.out.println("gausLemma(563, 1433) = " + gausLemma(563, 1433));
+        System.out.println("gausLemma(118,1433) = " + gausLemma(118, 1433));
     }
 }
