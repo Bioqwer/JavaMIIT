@@ -13,6 +13,18 @@ public class TestClass
         return (new java.util.Random().nextLong() % (max - min)) + min;
     }
 
+    public static byte[] getBinaryExp(long number) {
+        String binaryString = Long.toBinaryString(number);
+        byte binary[] = new byte[binaryString.chars().toArray().length];
+        for (int i = binaryString.chars().toArray().length - 1; i >= 0; i--) {
+            if (binaryString.charAt(binaryString.chars().toArray().length - 1 - i) == 48)
+                binary[i] = 0;
+            else
+                binary[i] = 1;
+        }
+        return binary;
+    }
+
     public static void main(String[] args) {
         BigInteger test = new BigInteger("314159265359");
         long a = 314159265359L;
@@ -24,17 +36,9 @@ public class TestClass
         random.nextLong();
         System.out.println("random " + Math.random());
         System.out.println("a*a = " + a * a);
-        System.out.println("randLong(a, 4*a+2) = " + randLong(a, 4*a+2));
-        String b=Long.toBinaryString(a);
-        System.out.println("b = " + b);
-        System.out.println("b.chars() = " + Arrays.toString(b.chars().toArray()));
-        byte binary[] = new byte[b.chars().toArray().length];
-        for (int i = b.chars().toArray().length - 1; i >= 0; i--) {
-            if(b.charAt( b.chars().toArray().length - 1-i)==48)
-                binary[i] = 0;
-            else
-                binary[i] =1;
-        }
-        System.out.println("binary = " + Arrays.toString(binary));
+        System.out.println("randLong(a, 4*a+2) = " + randLong(a, 4 * a + 2));
+
+        //Binary exp
+        System.out.println("getBinaryExp(10) = " + Arrays.toString(getBinaryExp(10)));
     }
 }
