@@ -26,13 +26,11 @@ public class Lab2 {
                 b = new BigInteger(p.bitLength(), rnd);
             } while (b.compareTo(BigInteger.ONE) <= 0 || b.compareTo(p) >= 0);
 
-            int j = 0;
             BigInteger z = b.modPow(m, p);
-            while (!((j == 0 && z.equals(BigInteger.ONE)) || z.equals(thisMinusOne))) {
-                if (j > 0 && z.equals(BigInteger.ONE) || ++j == a)
-                    return false;
-                z = z.modPow(BigInteger.valueOf(2), p);
-            }
+            if(z.equals(BigInteger.ONE)||z.equals(BigInteger.valueOf(-1)))
+                return true;
+            else
+                return false;
         }
         return true;
     }
@@ -58,7 +56,7 @@ public class Lab2 {
         for (int elements : primesTo100) {
             //return p If prime
             if (p.mod(BigInteger.valueOf(elements)).compareTo(BigInteger.ZERO) == 0)
-                continue;
+                break;
         }
         if(!rabinMillerTest(p, 100))
             p = generateFrom(q);
@@ -72,7 +70,11 @@ public class Lab2 {
 
     public static void main(String[] args) {
         BigInteger q = new BigInteger("314159265359");
-        System.out.println("rabinMillerTest(q,5) = " + rabinMillerTest(q, 5));
+        BigInteger notPrime = new BigInteger("314159265358");
+        System.out.println("BigInteger.valueOf(2) = " + BigInteger.valueOf(2));
+        System.out.println("rabinMillerTest(prime,5) = " + rabinMillerTest(q, 5));
+        System.out.println("java rabinMillerTest(notPrime,5) = " + notPrime.isProbablePrime(100));
+        System.out.println("rabinMillerTest(notPrime,5) = " + rabinMillerTest(notPrime, 15));
         BigInteger p = new BigInteger(q.bitLength(),0,ThreadLocalRandom.current()).add(q);
         System.out.println("q = " + q);
         System.out.println("p = " + p);
