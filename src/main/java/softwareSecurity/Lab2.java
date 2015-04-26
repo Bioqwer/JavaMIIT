@@ -44,7 +44,7 @@ public class Lab2 {
             if (p.remainder(BigInteger.valueOf(elements)).equals(BigInteger.ZERO)) {
                 System.out.println(p.remainder(BigInteger.valueOf(elements)).equals(BigInteger.ZERO));
                 System.out.println("p = " + p);
-                System.out.println("S = " + elements);
+                System.out.println("Sostavnoe with = " + elements);
                 return false;
             }
         }
@@ -53,7 +53,10 @@ public class Lab2 {
 
     public static BigInteger generateFrom(BigInteger q) {
         long ql = q.longValue();
-        long r = (new java.util.Random().nextLong() % (4 * ql + 2 - ql)) + ql;
+        long r = (new Random().nextLong() % (4 * ql + 2 - ql)) + ql;
+        if (r < 0) {
+            r = -r;
+        }
         BigInteger p = BigInteger.valueOf(r);
         //if 4*q+2>p   generate new
         final BigInteger q2add2 = BigInteger.valueOf(2).multiply(q).add(BigInteger.valueOf(2));
@@ -63,16 +66,33 @@ public class Lab2 {
             boolean expes = p.compareTo(q) == 1;
             expes = expes && (p.compareTo(q2add2) < 1);
             expes = expes && (p.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO));
-            if (expes)
+            if (!expes)
                 found = true;
             else {
                 ql = q.longValue();
-                r = (new java.util.Random().nextLong() % (4 * ql + 2 - ql)) + ql;
+                r = (new Random().nextLong() % (4 * ql + 2 - ql)) + ql;
+                if (r < 0) {
+                    r = -r;
+                }
                 p = BigInteger.valueOf(r);
             }
         }
-        System.out.println("Generated r = " + p);
+        p = p.multiply(q).add(BigInteger.ONE);
+        //System.out.println("Generated r = " + p);
         return p;
+    }
+
+    public static long randLong(long min, long max) {
+        long a = (new java.util.Random().nextLong() % (max - min)) + min;
+        boolean found = false;
+        while (!found) {
+            if (a >= min && a <= max) {
+                found = true;
+            } else {
+                a = (new java.util.Random().nextLong() % (max - min)) + min;
+            }
+        }
+        return a;
     }
 
     public static BigInteger metodMourera(BigInteger q) {
@@ -81,34 +101,33 @@ public class Lab2 {
         boolean found = false;
         while (!found) {
             p = generateFrom(q);
+            // step 2 check for Prime with 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
             while (!simple(p)) {
-                System.out.println("Simple");
                 p = generateFrom(q);
             }
-            if (!rabinMillerTest(p, 100))
-                p = generateFrom(q);
-            for (int i = 2; i < p.longValue() - 1; i++) {
-                BigInteger a = BigInteger.valueOf(i);
-                if (a.modPow(p.subtract(BigInteger.ONE), p).compareTo(BigInteger.ONE) != 0)
-                    return p;
+            // Rabin miller test
+            if (rabinMillerTest(p, 100)) {
+                found = true;
+                // step 3   check for   à^(ð-1)?1 mod p, (a^R-1, p)=1
+                long a = randLong(2, p.subtract(BigInteger.ONE).longValue());
+                BigInteger a1 = BigInteger.valueOf(a);
+                if (a1.modPow(p.subtract(BigInteger.ONE), p).compareTo(BigInteger.ONE) == 0) {
+                    //System.out.println("q =" + q);
+                    System.out.println("p = " + p);
+                    System.out.println("JAVA TEST = " + p.isProbablePrime(100));
+                } else {
+                    System.out.println("not prime");
+                    System.out.println("JAVA TEST =" + p.isProbablePrime(100));
+                }
             }
-            found = true;
         }
         return p;
     }
 
     public static void main(String[] args) {
         BigInteger q = new BigInteger("314159265359");
-        System.out.println("rabinMillerTest(q,5) = " + rabinMillerTest(q, 5));
-        BigInteger p = new BigInteger(q.bitLength(), 0, ThreadLocalRandom.current()).add(q);
-        System.out.println("q = " + q);
-        System.out.println("p = " + p);
-        System.out.println("p.compareTo(q) = " + p.compareTo(q));
-        System.out.println("q.compareTo(p) = " + q.compareTo(p));
-        System.out.println("q.compareTo(q) = " + q.compareTo(q));
-        System.out.println("q = " + q);
-        BigInteger qwe = metodMourera(q);
-        System.out.println("m = " + qwe);
-        System.out.println("qwe.isProbablePrime(100) = " + qwe.isProbablePrime(111));
+        BigInteger result = metodMourera(q);
+        System.out.println("result = " + result);
+        System.out.println("qwe.isProbablePrime(100) = " + result.isProbablePrime(111));
     }
 }
