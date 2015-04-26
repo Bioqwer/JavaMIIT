@@ -128,6 +128,5 @@ public class Lab2 {
         BigInteger q = new BigInteger("314159265359");
         BigInteger result = metodMourera(q);
         System.out.println("result = " + result);
-        System.out.println("qwe.isProbablePrime(100) = " + result.isProbablePrime(111));
     }
 }
