@@ -40,11 +40,7 @@ public class Lab2 {
         int[] primesTo100 = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
         //step 2  Compare with little primes
         for (int elements : primesTo100) {
-            //return p If prime
             if (p.remainder(BigInteger.valueOf(elements)).equals(BigInteger.ZERO)) {
-                System.out.println(p.remainder(BigInteger.valueOf(elements)).equals(BigInteger.ZERO));
-                System.out.println("p = " + p);
-                System.out.println("Sostavnoe with = " + elements);
                 return false;
             }
         }
@@ -71,18 +67,16 @@ public class Lab2 {
             else {
                 ql = q.longValue();
                 r = (new Random().nextLong() % (4 * ql + 2 - ql)) + ql;
-                if (r < 0) {
-                    r = -r;
-                }
                 p = BigInteger.valueOf(r);
             }
         }
         p = p.multiply(q).add(BigInteger.ONE);
-        //System.out.println("Generated r = " + p);
         return p;
     }
 
     public static long randLong(long min, long max) {
+        if(max<0)
+            max = -max;
         long a = (new java.util.Random().nextLong() % (max - min)) + min;
         boolean found = false;
         while (!found) {
@@ -112,8 +106,6 @@ public class Lab2 {
                 long a = randLong(2, p.subtract(BigInteger.ONE).longValue());
                 BigInteger a1 = BigInteger.valueOf(a);
                 if (a1.modPow(p.subtract(BigInteger.ONE), p).compareTo(BigInteger.ONE) == 0) {
-                    //System.out.println("q =" + q);
-                    System.out.println("p = " + p);
                     System.out.println("JAVA TEST = " + p.isProbablePrime(100));
                 } else {
                     System.out.println("not prime");
