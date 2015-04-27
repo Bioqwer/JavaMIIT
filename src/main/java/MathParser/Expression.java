@@ -16,27 +16,27 @@ public class Expression {
             throw new IllegalStateException("Expression isn't specified.");
         if (operations == null || operations.isEmpty())
             throw new IllegalStateException("Operations aren't specified.");
-        // Выходная строка, разбитая на "символы" - операции и операнды..
+        // Р’С‹С…РѕРґРЅР°СЏ СЃС‚СЂРѕРєР°, СЂР°Р·Р±РёС‚Р°СЏ РЅР° "СЃРёРјРІРѕР»С‹" - РѕРїРµСЂР°С†РёРё Рё РѕРїРµСЂР°РЅРґС‹..
         List<String> out = new ArrayList<String>();
-        // Стек операций.
+        // РЎС‚РµРє РѕРїРµСЂР°С†РёР№.
         Stack<String> stack = new Stack<String>();
 
-        // Удаление пробелов из выражения.
+        // РЈРґР°Р»РµРЅРёРµ РїСЂРѕР±РµР»РѕРІ РёР· РІС‹СЂР°Р¶РµРЅРёСЏ.
         expression = expression.replace(" ", "");
 
-        // Множество "символов", не являющихся операндами (операции и скобки).
+        // РњРЅРѕР¶РµСЃС‚РІРѕ "СЃРёРјРІРѕР»РѕРІ", РЅРµ СЏРІР»СЏСЋС‰РёС…СЃСЏ РѕРїРµСЂР°РЅРґР°РјРё (РѕРїРµСЂР°С†РёРё Рё СЃРєРѕР±РєРё).
         Set<String> operationSymbols = new HashSet<String>(operations.keySet());
         operationSymbols.add(leftBracket);
         operationSymbols.add(rightBracket);
 
-        // Индекс, на котором закончился разбор строки на прошлой итерации.
+        // РРЅРґРµРєСЃ, РЅР° РєРѕС‚РѕСЂРѕРј Р·Р°РєРѕРЅС‡РёР»СЃСЏ СЂР°Р·Р±РѕСЂ СЃС‚СЂРѕРєРё РЅР° РїСЂРѕС€Р»РѕР№ РёС‚РµСЂР°С†РёРё.
         int index = 0;
-        // Признак необходимости поиска следующего элемента.
+        // РџСЂРёР·РЅР°Рє РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РїРѕРёСЃРєР° СЃР»РµРґСѓСЋС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р°.
         boolean findNext = true;
         while (findNext) {
             int nextOperationIndex = expression.length();
             String nextOperation = "";
-            // Поиск следующего оператора или скобки.
+            // РџРѕРёСЃРє СЃР»РµРґСѓСЋС‰РµРіРѕ РѕРїРµСЂР°С‚РѕСЂР° РёР»Рё СЃРєРѕР±РєРё.
             for (String operation : operationSymbols) {
                 int i = expression.indexOf(operation, index);
                 if (i >= 0 && i < nextOperationIndex) {
@@ -44,20 +44,20 @@ public class Expression {
                     nextOperationIndex = i;
                 }
             }
-            // Оператор не найден.
+            // РћРїРµСЂР°С‚РѕСЂ РЅРµ РЅР°Р№РґРµРЅ.
             if (nextOperationIndex == expression.length()) {
                 findNext = false;
             } else {
-                // Если оператору или скобке предшествует операнд, добавляем его в выходную строку.
+                // Р•СЃР»Рё РѕРїРµСЂР°С‚РѕСЂСѓ РёР»Рё СЃРєРѕР±РєРµ РїСЂРµРґС€РµСЃС‚РІСѓРµС‚ РѕРїРµСЂР°РЅРґ, РґРѕР±Р°РІР»СЏРµРј РµРіРѕ РІ РІС‹С…РѕРґРЅСѓСЋ СЃС‚СЂРѕРєСѓ.
                 if (index != nextOperationIndex) {
                     out.add(expression.substring(index, nextOperationIndex));
                 }
-                // Обработка операторов и скобок.
-                // Открывающая скобка.
+                // РћР±СЂР°Р±РѕС‚РєР° РѕРїРµСЂР°С‚РѕСЂРѕРІ Рё СЃРєРѕР±РѕРє.
+                // РћС‚РєСЂС‹РІР°СЋС‰Р°СЏ СЃРєРѕР±РєР°.
                 if (nextOperation.equals(leftBracket)) {
                     stack.push(nextOperation);
                 }
-                // Закрывающая скобка.
+                // Р—Р°РєСЂС‹РІР°СЋС‰Р°СЏ СЃРєРѕР±РєР°.
                 else if (nextOperation.equals(rightBracket)) {
                     while (!stack.peek().equals(leftBracket)) {
                         out.add(stack.pop());
@@ -67,7 +67,7 @@ public class Expression {
                     }
                     stack.pop();
                 }
-                // Операция.
+                // РћРїРµСЂР°С†РёСЏ.
                 else {
                     while (!stack.empty() && !stack.peek().equals(leftBracket) &&
                             (operations.get(nextOperation) >= operations.get(stack.peek()))) {
@@ -78,11 +78,11 @@ public class Expression {
                 index = nextOperationIndex + nextOperation.length();
             }
         }
-        // Добавление в выходную строку операндов после последнего операнда.
+        // Р”РѕР±Р°РІР»РµРЅРёРµ РІ РІС‹С…РѕРґРЅСѓСЋ СЃС‚СЂРѕРєСѓ РѕРїРµСЂР°РЅРґРѕРІ РїРѕСЃР»Рµ РїРѕСЃР»РµРґРЅРµРіРѕ РѕРїРµСЂР°РЅРґР°.
         if (index != expression.length()) {
             out.add(expression.substring(index));
         }
-        // Пробразование выходного списка к выходной строке.
+        // РџСЂРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІС‹С…РѕРґРЅРѕРіРѕ СЃРїРёСЃРєР° Рє РІС‹С…РѕРґРЅРѕР№ СЃС‚СЂРѕРєРµ.
         while (!stack.empty()) {
             out.add(stack.pop());
         }
@@ -105,7 +105,7 @@ public class Expression {
         Stack<BigDecimal> stack = new Stack<BigDecimal>();
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            // Операнд.
+            // РћРїРµСЂР°РЅРґ.
             if (!Operation.getOperations().keySet().contains(token)) {
                 stack.push(new BigDecimal(token));
             } else {
@@ -121,10 +121,10 @@ public class Expression {
 
     public static void aboutExp(String expression)
     {
-        System.out.println("Инфиксная нотация:         " + expression);
+        System.out.println("РРЅС„РёРєСЃРЅР°СЏ РЅРѕС‚Р°С†РёСЏ:         " + expression);
         String rpn = sortingStation(expression, Operation.getOperations());
-        System.out.println("Обратная польская нотация: " + rpn);
-        System.out.println("\tРезультат " + calculateExpression(expression));
+        System.out.println("РћР±СЂР°С‚РЅР°СЏ РїРѕР»СЊСЃРєР°СЏ РЅРѕС‚Р°С†РёСЏ: " + rpn);
+        System.out.println("\tР РµР·СѓР»СЊС‚Р°С‚ " + calculateExpression(expression));
     }
 
     private Expression() {
