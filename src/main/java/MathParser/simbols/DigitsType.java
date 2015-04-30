@@ -9,18 +9,18 @@ import java.util.Map;
  */
 public abstract class DigitsType {
 
-    public static final Map<String, DigitsType> Simbols;
+    public static final Map<String, DigitsType> TYPES;
 
     static {
-        Simbols = new HashMap<>();
-        Simbols.put("Rimskie", new Rimskie());
+        TYPES = new HashMap<>();
+        TYPES.put("Rimskie", new Rimskie());
     }
 
     public DigitsType() {
     }
 
     public static BigDecimal interpret(String variable) {
-        for (DigitsType simbolsType : Simbols.values())
+        for (DigitsType simbolsType : TYPES.values())
             if (simbolsType.check(variable))
                 return simbolsType.simbolRule(variable);
         return new BigDecimal(variable);
