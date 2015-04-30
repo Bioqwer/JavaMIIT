@@ -14,18 +14,25 @@ public class Simbol {
 
     static {
         RIMSK_SIMBOLS = new HashMap<>();
-        RIMSK_SIMBOLS.put("I",1);
-        RIMSK_SIMBOLS.put("V",5);
-        RIMSK_SIMBOLS.put("X",10);
-        RIMSK_SIMBOLS.put("L",50);
-        RIMSK_SIMBOLS.put("C",100);
+        RIMSK_SIMBOLS.put("I", 1);
+        RIMSK_SIMBOLS.put("V", 5);
+        RIMSK_SIMBOLS.put("X", 10);
+        RIMSK_SIMBOLS.put("L", 50);
+        RIMSK_SIMBOLS.put("C", 100);
+        RIMSK_SIMBOLS.put("M", 1000);
     }
 
-    public static BigDecimal interpret(String variable)
-    {
-        if (RIMSK_SIMBOLS.keySet().contains(variable))
+    public static BigDecimal interpret(String variable) {
+        if (checkForRimskie(variable))
             return rimskSimbolRule(variable);
         return new BigDecimal(variable);
+    }
+
+    private static boolean checkForRimskie(String variable) {
+        for (int i = 0; i < variable.length(); i++)
+            if (RIMSK_SIMBOLS.keySet().contains(variable.substring(i, i + 1)))
+                return true;
+        return false;
     }
 
     public static BigDecimal rimskSimbolRule(String variable) {
@@ -34,20 +41,19 @@ public class Simbol {
         for (int i = 0; i < variable.length(); i++) {
             stack.push(variable.substring(i, i + 1));
         }
-        while (!stack.empty())
-        {
+        while (!stack.empty()) {
             int varLast = RIMSK_SIMBOLS.get(stack.pop());
             Stack<Integer> littleStack = new Stack<>();
-            if(!stack.empty()) {
+            if (!stack.empty()) {
                 while (varLast > RIMSK_SIMBOLS.get(stack.lastElement())) {
                     littleStack.push(RIMSK_SIMBOLS.get(stack.pop()));
-                    if(stack.empty())
+                    if (stack.empty())
                         break;
                 }
             }
-            result = result+varLast;
+            result = result + varLast;
             while (!littleStack.empty())
-                result=result-littleStack.pop();
+                result = result - littleStack.pop();
         }
         return BigDecimal.valueOf(result);
     }

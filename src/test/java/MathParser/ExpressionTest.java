@@ -41,9 +41,20 @@ public class ExpressionTest {
         Expression.aboutExp(expression);
         assertEquals(BigDecimal.valueOf(20), calculateExpression(expression));
 
-        expression = "X/X+200";
+        expression = "X/XX+200";
         Expression.aboutExp(expression);
-        assertEquals(BigDecimal.valueOf(201), calculateExpression(expression));
+        assertEquals(BigDecimal.valueOf(200.5), calculateExpression(expression));
 
+        expression = "2^X";
+        Expression.aboutExp(expression);
+        assertEquals(BigDecimal.valueOf(1024.0), calculateExpression(expression));
+
+        expression = "CLXVI+2*CLXVI";
+        Expression.aboutExp(expression);
+        assertEquals(BigDecimal.valueOf(498), calculateExpression(expression));
+
+        expression = "M+2*C";
+        Expression.aboutExp(expression);
+        assertEquals(BigDecimal.valueOf(1200), calculateExpression(expression));
     }
 }

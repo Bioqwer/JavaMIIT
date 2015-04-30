@@ -14,9 +14,9 @@ public class SimbolTest {
     @Test
     public void testInterpret() throws Exception {
         Simbol.rimskSimbolRule("LXIXIIIII");
-        System.out.println( Simbol.rimskSimbolRule("IXIII"));
+        System.out.println(Simbol.rimskSimbolRule("IXIII"));
         assertEquals(new BigDecimal("69"), Simbol.rimskSimbolRule("LXIX"));
-        assertEquals(new BigDecimal("74"),Simbol.rimskSimbolRule("LXIXIIIII"));
-        assertEquals(new BigDecimal("74"),Simbol.rimskSimbolRule("LXIXIIIII"));
+        assertEquals(new BigDecimal("74"), Simbol.rimskSimbolRule("LXIXIIIII"));
+        assertEquals(new BigDecimal("74"), Simbol.rimskSimbolRule("LXIXIIIII"));
     }
 }
