@@ -8,7 +8,7 @@ import java.util.Stack;
 /**
  * Created by Antony on 30.04.2015.
  */
-public class Simbol {
+public class Rimskie extends DigitsType {
 
     public static final Map<String, Integer> RIMSK_SIMBOLS;
 
@@ -22,20 +22,15 @@ public class Simbol {
         RIMSK_SIMBOLS.put("M", 1000);
     }
 
-    public static BigDecimal interpret(String variable) {
-        if (checkForRimskie(variable))
-            return rimskSimbolRule(variable);
-        return new BigDecimal(variable);
-    }
-
-    private static boolean checkForRimskie(String variable) {
+    protected boolean check(String variable) {
         for (int i = 0; i < variable.length(); i++)
             if (RIMSK_SIMBOLS.keySet().contains(variable.substring(i, i + 1)))
                 return true;
         return false;
     }
 
-    public static BigDecimal rimskSimbolRule(String variable) {
+    @Override
+    public BigDecimal simbolRule(String variable) {
         int result = 0;
         Stack<String> stack = new Stack<>();
         for (int i = 0; i < variable.length(); i++) {

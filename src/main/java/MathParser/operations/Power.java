@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 public class Power extends Operation {
 
     public Power() {
-        setPriority(1);
-        setToken("^");
+        super("^",1);
     }
 
     @Override

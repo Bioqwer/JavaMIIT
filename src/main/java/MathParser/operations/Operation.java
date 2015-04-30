@@ -20,6 +20,11 @@ public abstract class Operation {
         OPERATIONS.put(new Power().getToken(),  new Power());
     }
 
+    public Operation(String token, int priority) {
+        this.token = token;
+        this.priority = priority;
+    }
+
     private String token;
     private int priority;
 

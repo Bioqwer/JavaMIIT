@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 public class Divide extends Operation {
 
     public Divide() {
-        setToken("/");
-        setPriority(1);
+        super("/",1);
     }
 
     @Override

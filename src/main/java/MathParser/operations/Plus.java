@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 public class Plus extends Operation {
 
     public Plus() {
-        setToken("+");
-        setPriority(2);
+        super("+",2);
     }
 
 

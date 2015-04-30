@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 public class Minus extends Operation {
 
     public Minus() {
-        setToken("-");
-        setPriority(2);
+        super("-",2);
     }
 
     @Override

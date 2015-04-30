@@ -7,9 +7,13 @@ import java.math.BigDecimal;
  */
 public class Multiply extends Operation {
 
-    public Multiply() {
+    /*public Multiply() {
         setToken("*");
         setPriority(1);
+    }*/
+
+    public Multiply() {
+        super("*", 1);
     }
 
     @Override
