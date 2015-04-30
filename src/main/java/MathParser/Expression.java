@@ -1,6 +1,7 @@
 package MathParser;
 
 import MathParser.operations.Operation;
+import MathParser.simbols.Simbol;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -107,7 +108,7 @@ public class Expression {
             String token = tokenizer.nextToken();
             // Операнд.
             if (!Operation.getOperations().keySet().contains(token)) {
-                stack.push(new BigDecimal(token));
+                stack.push(Simbol.interpret(token));
             } else {
                 BigDecimal operand2 = stack.pop();
                 BigDecimal operand1 = stack.empty() ? BigDecimal.ZERO : stack.pop();

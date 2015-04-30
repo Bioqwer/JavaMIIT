@@ -34,4 +34,16 @@ public class ExpressionTest {
         Expression.aboutExp(expression);
         assertEquals(BigDecimal.valueOf(8.0), calculateExpression(expression));
     }
+
+    @Test
+    public void testRimskie() throws Exception {
+        String expression = "X+X";
+        Expression.aboutExp(expression);
+        assertEquals(BigDecimal.valueOf(20), calculateExpression(expression));
+
+        expression = "X/X+200";
+        Expression.aboutExp(expression);
+        assertEquals(BigDecimal.valueOf(201), calculateExpression(expression));
+
+    }
 }
