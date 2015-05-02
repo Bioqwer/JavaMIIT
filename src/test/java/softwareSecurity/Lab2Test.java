@@ -25,5 +25,12 @@ public class Lab2Test extends TestCase {
         String lower = "az";
         lower = lower.toUpperCase();
         System.out.println("lower.getBytes() = " + Arrays.toString(lower.getBytes()));
+        asd = "ALGORITM";
+        System.out.println("asd.getBytes() = " + Arrays.toString(asd.getBytes()));
+        lower = "az";
+        lower = lower.toUpperCase();
+        System.out.println("lower.getBytes() = " + Arrays.toString(lower.getBytes()));
+        int a = 78;
+        System.out.println();
     }
 }
