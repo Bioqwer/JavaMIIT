@@ -20,9 +20,9 @@ public class Lab2Test extends TestCase {
         System.out.println("p = " + p);
         System.out.println(q4add2.compareTo(p));
 
-        String asd = "AQWERTYUIOPASDFGHJKLZXCVBNMZZ";
+        String asd = "ﬂ¿…÷” ≈Õ√ÿŸ«’‘€¬¿œ–ŒÀƒ∆›®ﬂ◊—Ã»“‹¡ﬁ";
         System.out.println("asd.getBytes() = " + Arrays.toString(asd.getBytes()));
-        String lower = "az";
+        String lower = "¿ﬂ";
         lower = lower.toUpperCase();
         System.out.println("lower.getBytes() = " + Arrays.toString(lower.getBytes()));
         asd = "ALGORITM";

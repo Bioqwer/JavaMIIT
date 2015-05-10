@@ -14,11 +14,10 @@ public class RSA {
     private static Map<Integer, Character> keysByInteger = new HashMap<>();
 
     static {
-        String s = "AQWERTYUIOPASDFGHJKLZXCVBNMZZ";
-        byte[] d = s.getBytes();
+        String s = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜÚÛŞßQWERTYUIOPASDFGHJKLZXCVBNM";
         for (int i = 0; i < s.length(); i++) {
-            keysByChar.put(s.charAt(i), Integer.valueOf(d[i]));
-            keysByInteger.put(Integer.valueOf(d[i]), s.charAt(i));
+            keysByChar.put(s.charAt(i), i);
+            keysByInteger.put(i, s.charAt(i));
         }
 
         System.out.println("keysByChar = " + keysByChar);
@@ -44,22 +43,8 @@ public class RSA {
         return result;
     }
 
-    public static BigInteger perebor(BigInteger n, BigInteger text, BigInteger step) {
-        BigInteger m = n;
-        BigInteger x = BigInteger.valueOf(1000000000000L);
-        BigInteger y = BigInteger.ONE;
-        while (x.compareTo(m) != 0) {
-            y = x.modPow(step, m);
-            if (y.compareTo(text) == 0)
-                return y;
-            else
-                x.add(BigInteger.ONE);
-        }
-        return y;
-    }
-
     public static long generateE(long min, long max, BigInteger fi) {
-        //Ïîèñê E
+        //????? E
         long r = (new java.util.Random().nextLong() % (max - min)) + min;
         boolean found = false;
         while (!found) {
@@ -141,7 +126,10 @@ public class RSA {
 
     public static BigInteger writeX(String word) {
         word = word.toUpperCase();
-        byte[] a = word.getBytes();
+        byte[] a = new byte[word.length()];
+        for (int i = 0; i < a.length; i++) {
+            a[i]= (byte) translit(word.charAt(i));
+        }
         BigInteger x = BigInteger.ZERO;
         BigInteger y;
         int j = 2 * a.length - 2;
@@ -173,15 +161,15 @@ public class RSA {
         return result;
     }
 
-    public static void main(String args[]) {
-        String word = "ALGORITM";
+    public static void algoritm(String word)
+    {
         int[] a = strToInt(word);
         System.out.println("word = " + word);
         System.out.println("a = " + Arrays.toString(a));
 
         BigInteger x;
-        x = writeX("ALGORITM");
-        System.out.println("x = " + writeX("ALGORITM"));
+        x = writeX(word);
+        System.out.println("x = " + writeX(word));
 
         BigInteger q = new BigInteger("77733343");
         BigInteger p = new BigInteger("98764579");
@@ -207,5 +195,14 @@ public class RSA {
         System.out.println("de = " + d.multiply(e).mod(Qminus1.multiply(Pminus1)));
 
         System.out.println("dewriteX() = " + Arrays.toString(dewriteX(dec, word.length())));
+    }
+
+    public static void main(String args[]) {
+        String word = "ÀËÃÎĞÈÒÌ";
+        algoritm(word);
+        word = "alGoRitm";
+        algoritm(word);
+        word = "ÑîñÍà";
+        algoritm(word);
     }
 }
