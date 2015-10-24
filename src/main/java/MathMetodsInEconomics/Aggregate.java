@@ -7,10 +7,17 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 /**
- * Created by Antony on 01.12.2014.
+ * The type Aggregate.
  */
 public class Aggregate {
 
+    /**
+     * Read string from file.
+     *
+     * @param fileName the file name
+     * @return the string
+     * @throws FileNotFoundException the file not found exception
+     */
     public static String read(String fileName) throws FileNotFoundException {
         //Этот спец. объект для построения строки
         StringBuilder sb = new StringBuilder();
@@ -22,7 +29,7 @@ public class Aggregate {
                 String s;
                 while ((s = in.readLine()) != null) {
                     sb.append(s);
-                    sb.append("\n");
+                    sb.append(System.lineSeparator());
                 }
             }
             //Также не забываем закрыть файл
@@ -34,11 +41,17 @@ public class Aggregate {
         return sb.toString();
     }
 
+    /**
+     * Parse double [ ] [ ].
+     *
+     * @param text the text
+     * @return the double [ ] [ ]
+     */
     public static double[][] parse(String text) {
         int n;
         int m = 0;
         {
-            StringTokenizer lines = new StringTokenizer(text, "\n");
+            StringTokenizer lines = new StringTokenizer(text, System.lineSeparator());
             int i = 0;
             while (lines.hasMoreElements()) {
                 String line = lines.nextToken();
@@ -54,7 +67,7 @@ public class Aggregate {
             n=i;
         }
         double[][] result = new double[n][m];
-        StringTokenizer lines = new StringTokenizer(text, "\n");
+        StringTokenizer lines = new StringTokenizer(text, System.lineSeparator());
         int i = 0;
         while (lines.hasMoreElements()) {
             String line = lines.nextToken();
@@ -70,6 +83,11 @@ public class Aggregate {
         return result;
     }
 
+    /**
+     * Matrix to string.
+     *
+     * @param matrix the matrix
+     */
     public static void matrixToString(double[][] matrix) {
         for (double[] aMatrix : matrix) {
             for (double anAMatrix : aMatrix) {
@@ -81,10 +99,11 @@ public class Aggregate {
     }
 
     /**
+     * Aggregate double [ ] [ ].
      *
-     * @param matrix Матрица прямых затрат
+     * @param matrix    Матрица прямых затрат
      * @param aggregate Вектор агрегирования
-     * @param x Vector x
+     * @param x         Vector x
      * @return Result of aggregation matrix
      */
     public static double[][] aggregate(double[][] matrix, int[][] aggregate, double[] x) {
@@ -101,9 +120,10 @@ public class Aggregate {
 
     /**
      * Возваращает вектор B по заданой формуле.
-     * @param a Матрица прямых затрат
-     * @param I Вектор агрегирования
-     * @param x Vector x
+     *
+     * @param a       Матрица прямых затрат
+     * @param I       Вектор агрегирования
+     * @param x       Vector x
      * @param i_index Position element in cols
      * @param j_index Position element in rows
      * @return Return result of function
@@ -123,6 +143,12 @@ public class Aggregate {
         return result/tempX;
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws FileNotFoundException the file not found exception
+     */
     public static void main(String[] args) throws FileNotFoundException {
         double[][] matrix;
         //Чтение файла

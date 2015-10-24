@@ -3,21 +3,19 @@ package MathParser.operations;
 import java.math.BigDecimal;
 
 /**
- * Created by Antony on 27.04.2015.
+ * The type Multiply.
  */
 public class Multiply extends Operation {
 
-    /*public Multiply() {
-        setToken("*");
-        setPriority(1);
-    }*/
-
+    /**
+     * Instantiates a new Multiply.
+     */
     public Multiply() {
         super("*", 1);
     }
 
     @Override
-    public BigDecimal calcWithOperands(BigDecimal operand1, BigDecimal operand2) {
-        return operand1.multiply(operand2);
+    public BigDecimal calcWithOperands(BigDecimal leftOperand, BigDecimal rightOperand) {
+        return leftOperand.multiply(rightOperand);
     }
 }

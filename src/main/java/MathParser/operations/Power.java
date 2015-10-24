@@ -3,16 +3,19 @@ package MathParser.operations;
 import java.math.BigDecimal;
 
 /**
- * Created by Antony on 27.04.2015.
+ * The type Power.
  */
 public class Power extends Operation {
 
+    /**
+     * Instantiates a new Power.
+     */
     public Power() {
         super("^",1);
     }
 
     @Override
-    public BigDecimal calcWithOperands(BigDecimal operand1, BigDecimal operand2) {
-        return BigDecimal.valueOf(Math.pow(operand1.doubleValue(), operand2.doubleValue()));
+    public BigDecimal calcWithOperands(BigDecimal leftOperand, BigDecimal rightOperand) {
+        return BigDecimal.valueOf(Math.pow(leftOperand.doubleValue(), rightOperand.doubleValue()));
     }
 }

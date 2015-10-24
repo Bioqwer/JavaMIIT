@@ -6,10 +6,13 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * Created by Antony on 30.04.2015.
+ * The type Rimskie.
  */
 public class Rimskie extends DigitsType {
 
+    /**
+     * The constant RIMSK_SIMBOLS.
+     */
     public static final Map<String, Integer> RIMSK_SIMBOLS;
 
     static {

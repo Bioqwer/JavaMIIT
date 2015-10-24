@@ -1,32 +1,46 @@
 package MathParser;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
 import MathParser.operations.Operation;
 import MathParser.simbols.DigitsType;
 
-import java.math.BigDecimal;
-import java.util.*;
-
 /**
- * Created by Antony on 27.04.2015.
+ * The type Expression.
  */
 public class Expression {
 
-    private static String sortingStation(String expression, Map<String, Integer> operations, String leftBracket,
-                                        String rightBracket) {
+    private Expression() {
+    }
+
+    /**
+     * Implementation of <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse_Polish_notation</a>
+     */
+    private static String sortingStation(String expression,
+                                         Map<String, Integer> operations,
+                                         String leftBracket,
+                                         String rightBracket) {
         if (expression == null || expression.length() == 0)
             throw new IllegalStateException("Expression isn't specified.");
         if (operations == null || operations.isEmpty())
             throw new IllegalStateException("Operations aren't specified.");
         // Выходная строка, разбитая на "символы" - операции и операнды..
-        List<String> out = new ArrayList<String>();
+        List<String> out = new ArrayList<>();
         // Стек операций.
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
 
         // Удаление пробелов из выражения.
         expression = expression.replace(" ", "");
 
         // Множество "символов", не являющихся операндами (операции и скобки).
-        Set<String> operationSymbols = new HashSet<String>(operations.keySet());
+        Set<String> operationSymbols = new HashSet<>(operations.keySet());
         operationSymbols.add(leftBracket);
         operationSymbols.add(rightBracket);
 
@@ -63,7 +77,8 @@ public class Expression {
                     while (!stack.peek().equals(leftBracket)) {
                         out.add(stack.pop());
                         if (stack.empty()) {
-                            throw new IllegalArgumentException("Unmatched brackets");
+                            throw new IllegalArgumentException(
+                                    "Unmatched brackets");
                         }
                     }
                     stack.pop();
@@ -71,7 +86,8 @@ public class Expression {
                 // Операция.
                 else {
                     while (!stack.empty() && !stack.peek().equals(leftBracket) &&
-                            (operations.get(nextOperation) >= operations.get(stack.peek()))) {
+                            (operations.get(nextOperation) >= operations.get(
+                                    stack.peek()))) {
                         out.add(stack.pop());
                     }
                     stack.push(nextOperation);
@@ -96,14 +112,28 @@ public class Expression {
         return result.toString();
     }
 
-    public static String sortingStation(String expression, Map<String, Integer> operations) {
+    /**
+     * Sorting station string.
+     *
+     * @param expression the expression
+     * @param operations the operations
+     * @return the string
+     */
+    public static String sortingStation(String expression,
+                                        Map<String, Integer> operations) {
         return sortingStation(expression, operations, "(", ")");
     }
 
+    /**
+     * Calculate expression big decimal.
+     *
+     * @param expression the expression
+     * @return the big decimal
+     */
     public static BigDecimal calculateExpression(String expression) {
         String rpn = sortingStation(expression, Operation.getOperations());
         StringTokenizer tokenizer = new StringTokenizer(rpn, " ");
-        Stack<BigDecimal> stack = new Stack<BigDecimal>();
+        Stack<BigDecimal> stack = new Stack<>();
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             // Операнд.
@@ -120,19 +150,15 @@ public class Expression {
         return stack.pop();
     }
 
-    public static void aboutExp(String expression)
-    {
+    /**
+     * About exp.
+     *
+     * @param expression the expression
+     */
+    public static void aboutExp(String expression) {
         System.out.println("Инфиксная нотация:         " + expression);
         String rpn = sortingStation(expression, Operation.getOperations());
         System.out.println("Обратная польская нотация: " + rpn);
         System.out.println("\tРезультат " + calculateExpression(expression));
     }
-
-    private Expression() {
-    }
-
-    public static void main(String[] args) {
-
-    }
-
 }

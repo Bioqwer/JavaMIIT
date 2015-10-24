@@ -3,16 +3,19 @@ package MathParser.operations;
 import java.math.BigDecimal;
 
 /**
- * Created by Antony on 27.04.2015.
+ * The type Divide.
  */
 public class Divide extends Operation {
 
+    /**
+     * Instantiates a new Divide.
+     */
     public Divide() {
         super("/",1);
     }
 
     @Override
-    public BigDecimal calcWithOperands(BigDecimal operand1, BigDecimal operand2) {
-        return operand1.divide(operand2);
+    public BigDecimal calcWithOperands(BigDecimal leftOperand, BigDecimal rightOperand) {
+        return leftOperand.divide(rightOperand);
     }
 }

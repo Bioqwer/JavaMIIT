@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Antony on 30.04.2015.
+ * The type Digits type.
  */
 public abstract class DigitsType {
 
+    /**
+     * The constant TYPES.
+     */
     public static final Map<String, DigitsType> TYPES;
 
     static {
@@ -16,9 +19,18 @@ public abstract class DigitsType {
         TYPES.put("Rimskie", new Rimskie());
     }
 
+    /**
+     * Instantiates a new Digits type.
+     */
     public DigitsType() {
     }
 
+    /**
+     * Interpret big decimal.
+     *
+     * @param variable the variable
+     * @return the big decimal
+     */
     public static BigDecimal interpret(String variable) {
         for (DigitsType simbolsType : TYPES.values())
             if (simbolsType.check(variable))
@@ -26,8 +38,20 @@ public abstract class DigitsType {
         return new BigDecimal(variable);
     }
 
+    /**
+     * Check boolean.
+     *
+     * @param variable the variable
+     * @return the boolean
+     */
     protected abstract boolean check(String variable);
 
+    /**
+     * Simbol rule big decimal.
+     *
+     * @param variable the variable
+     * @return the big decimal
+     */
     public abstract BigDecimal simbolRule(String variable);
 
 }

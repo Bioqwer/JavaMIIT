@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by aleksandrov_a on 02.05.2015.
+ * Simple Rsa implementation.
  */
 public class RSA {
 
@@ -24,6 +24,12 @@ public class RSA {
         System.out.println("keysByInteger = " + keysByInteger);
     }
 
+    /**
+     * Translit int.
+     *
+     * @param simbol the simbol
+     * @return the int
+     */
     public static int translit(char simbol) {
         String ch = String.valueOf(simbol);
         ch = ch.toUpperCase();
@@ -31,6 +37,12 @@ public class RSA {
         return keysByChar.get(simbol);
     }
 
+    /**
+     * Translit char.
+     *
+     * @param digit the digit
+     * @return the char
+     */
     public static char translit(int digit) {
         return keysByInteger.get(digit);
     }
@@ -43,12 +55,22 @@ public class RSA {
         return result;
     }
 
-    public static long generateE(long min, long max, BigInteger fi) {
+    /**
+     * Generate e long.
+     *
+     * @param min the min
+     * @param max the max
+     * @param fi  the fi
+     * @return the long
+     */
+    public static long generateE(long min,
+                                 long max,
+                                 BigInteger fi) {
         //????? E
         long r = (new java.util.Random().nextLong() % (max - min)) + min;
         boolean found = false;
         while (!found) {
-            if (r >= min && r <= max && NOD(fi, BigInteger.valueOf(r)) == true) {
+            if (r >= min && r <= max && NOD(fi, BigInteger.valueOf(r))) {
                 found = true;
             } else {
                 r = (new java.util.Random().nextLong() % (max - min)) + min;
@@ -57,12 +79,18 @@ public class RSA {
         return r;
     }
 
-    public static boolean NOD(BigInteger a, BigInteger b) {
-        BigInteger s = BigInteger.ONE;
+    /**
+     * Nod boolean.
+     *
+     * @param a the a
+     * @param b the b
+     * @return the boolean
+     */
+    public static boolean NOD(BigInteger a,
+                              BigInteger b) {
         BigInteger r = BigInteger.TEN;
 
         while (r.compareTo(BigInteger.ONE) != 0) {
-            s = a.divide(b);
             r = a.remainder(b);
             if (r.compareTo(BigInteger.ZERO) == 0) {
                 return false;
@@ -73,7 +101,15 @@ public class RSA {
         return true;
     }
 
-    public static BigInteger Evklid(BigInteger a, BigInteger b) {
+    /**
+     * Evklid big integer.
+     *
+     * @param a the a
+     * @param b the b
+     * @return the big integer
+     */
+    public static BigInteger Evklid(BigInteger a,
+                                    BigInteger b) {
 
         BigInteger[][] E = new BigInteger[2][2];
         for (int i = 0; i < E.length; i++)
@@ -124,11 +160,17 @@ public class RSA {
         return A1[1][1];
     }
 
+    /**
+     * Write x big integer.
+     *
+     * @param word the word
+     * @return the big integer
+     */
     public static BigInteger writeX(String word) {
         word = word.toUpperCase();
         byte[] a = new byte[word.length()];
         for (int i = 0; i < a.length; i++) {
-            a[i]= (byte) translit(word.charAt(i));
+            a[i] = (byte) translit(word.charAt(i));
         }
         BigInteger x = BigInteger.ZERO;
         BigInteger y;
@@ -142,14 +184,23 @@ public class RSA {
         return x;
     }
 
-    public static char[] dewriteX(BigInteger a, int n) {
+    /**
+     * Dewrite x char [ ].
+     *
+     * @param a the a
+     * @param n the n
+     * @return the char [ ]
+     */
+    public static char[] dewriteX(BigInteger a,
+                                  int n) {
         int x[] = new int[n];
         int xobr[] = new int[n];
         BigInteger y;
         for (int i = 0; i < x.length; i++) {
             y = a.divide(BigInteger.valueOf(100));
             x[i] = a.subtract(y.multiply(BigInteger.valueOf(100))).intValueExact();
-            a = a.subtract(BigInteger.valueOf(x[i])).divide(BigInteger.valueOf(100));
+            a = a.subtract(BigInteger.valueOf(x[i])).divide(BigInteger.valueOf(
+                    100));
         }
         for (int i = 0; i < x.length; i++) {
             xobr[i] = x[x.length - 1 - i];
@@ -161,8 +212,12 @@ public class RSA {
         return result;
     }
 
-    public static void algoritm(String word)
-    {
+    /**
+     * Algoritm.
+     *
+     * @param word the word
+     */
+    public static void algoritm(String word) {
         int[] a = strToInt(word);
         System.out.println("word = " + word);
         System.out.println("a = " + Arrays.toString(a));
@@ -179,7 +234,9 @@ public class RSA {
         System.out.println("pq = " + p.multiply(q));
         System.out.println("(p-1)(q-1) = " + Qminus1.multiply(Pminus1));
 
-        BigInteger e = BigInteger.valueOf(generateE(1000, 10000, Qminus1.multiply(Pminus1)));
+        BigInteger e = BigInteger.valueOf(generateE(1000,
+                                                    10000,
+                                                    Qminus1.multiply(Pminus1)));
         System.out.println("e = " + e);
         BigInteger y = x.modPow(e, p.multiply(q));
 
@@ -194,9 +251,15 @@ public class RSA {
         System.out.println("decode = " + dec);
         System.out.println("de = " + d.multiply(e).mod(Qminus1.multiply(Pminus1)));
 
-        System.out.println("dewriteX() = " + Arrays.toString(dewriteX(dec, word.length())));
+        System.out.println("dewriteX() = " + Arrays.toString(dewriteX(dec,
+                                                                      word.length())));
     }
 
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
     public static void main(String args[]) {
         String word = "ÀËÃÎĞÈÒÌ";
         algoritm(word);
