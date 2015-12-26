@@ -66,9 +66,13 @@ public class LinkedListVectorTest extends TestCase {
             linkedListVector.addElement(i);
             System.out.println("linkedListVector.getElement(" + i + ") = " + linkedListVector.getElement(i));
         }
+
         linkedListVector.deleteElement(4);
-        for (int i = 0; i < 4; i++)
-            System.out.println("linkedListVector.getElement(" + i + ") = " + linkedListVector.getElement(i));
-        assertEquals(3, linkedListVector.getElement(3));
+        for (int i = 0; i < linkedListVector.getVectorSize(); i++) {
+            System.out.println("linkedListVector.getElement(" + i + ") = " + linkedListVector.getElement(
+                    i));
+        }
+        assertEquals(4,linkedListVector.getElement(3));
+        assertEquals(4, linkedListVector.getVectorSize());
     }
 }

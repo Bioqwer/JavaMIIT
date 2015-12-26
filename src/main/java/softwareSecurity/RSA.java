@@ -14,7 +14,7 @@ public class RSA {
     private static Map<Integer, Character> keysByInteger = new HashMap<>();
 
     static {
-        String s = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜÚÛŞßQWERTYUIOPASDFGHJKLZXCVBNM";
+        String s = "Ğ™Ğ¦Ğ£ĞšĞ•ĞĞ“Ğ¨Ğ©Ğ—Ğ¥Ğ¤Ğ«Ğ’ĞĞŸĞ ĞĞ›Ğ”Ğ–Ğ­ĞĞ¯Ğ§Ğ¡ĞœĞ˜Ğ¢Ğ¬Ğ‘Ğ®QWERTYUIOPASDFGHJKLZXCVBNM";
         for (int i = 0; i < s.length(); i++) {
             keysByChar.put(s.charAt(i), i);
             keysByInteger.put(i, s.charAt(i));
@@ -66,7 +66,6 @@ public class RSA {
     public static long generateE(long min,
                                  long max,
                                  BigInteger fi) {
-        //????? E
         long r = (new java.util.Random().nextLong() % (max - min)) + min;
         boolean found = false;
         while (!found) {
@@ -217,7 +216,7 @@ public class RSA {
      *
      * @param word the word
      */
-    public static void algoritm(String word) {
+    public static String algoritm(String word) {
         int[] a = strToInt(word);
         System.out.println("word = " + word);
         System.out.println("a = " + Arrays.toString(a));
@@ -251,21 +250,9 @@ public class RSA {
         System.out.println("decode = " + dec);
         System.out.println("de = " + d.multiply(e).mod(Qminus1.multiply(Pminus1)));
 
-        System.out.println("dewriteX() = " + Arrays.toString(dewriteX(dec,
-                                                                      word.length())));
-    }
-
-    /**
-     * Main.
-     *
-     * @param args the args
-     */
-    public static void main(String args[]) {
-        String word = "ÀËÃÎĞÈÒÌ";
-        algoritm(word);
-        word = "alGoRitm";
-        algoritm(word);
-        word = "ÑîñÍà";
-        algoritm(word);
+        String result = String.valueOf(dewriteX(dec,
+                                                 word.length()));
+        System.out.println("dewriteX() = " + result);
+        return result;
     }
 }

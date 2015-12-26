@@ -4,9 +4,6 @@ import java.math.BigInteger;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Created by Antony on 12.04.2015.
- */
 public class Lab2 {
 
     public static boolean rabinMillerTest(BigInteger p, int rounds) {
@@ -102,7 +99,7 @@ public class Lab2 {
             // Rabin miller test
             if (rabinMillerTest(p, 100)) {
                 found = true;
-                // step 3   check for   à^(ð-1)?1 mod p, (a^R-1, p)=1
+                // step 3   check for   q^(p-1)?1 mod p, (a^R-1, p)=1
                 long a = randLong(2, p.subtract(BigInteger.ONE).longValue());
                 BigInteger a1 = BigInteger.valueOf(a);
                 if (a1.modPow(p.subtract(BigInteger.ONE), p).compareTo(BigInteger.ONE) == 0) {
