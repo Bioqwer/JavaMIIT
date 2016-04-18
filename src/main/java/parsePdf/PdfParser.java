@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,9 +23,13 @@ public class PdfParser {
     private static final String COMMA = ";";
     private static final Pattern datePattern = Pattern.compile("Дата(.*)№(.*)");
     private static final Pattern volumePattern = Pattern.compile(": (.*) Ква");
-    private static final Pattern roomNumber = Pattern.compile("кв.(.*)");
-    private static final Pattern ownerPatter = Pattern.compile("2.1. (.*)");
-    private static final Pattern ownerNumber = Pattern.compile("Со\\S* (.*)");
+    private static final Pattern roomNumber = Pattern.compile(
+            "Космонавтов.*кв[\\. ](.*)");
+    private static final Pattern ownerNamePatter = Pattern.compile(
+            "2\\.1\\. (.*)");
+    private static final Pattern ownerNamePatterWhile = Pattern.compile(
+            "3\\.");
+    private static final Pattern ownerNumber = Pattern.compile("3\\.1\\..*?(\\d.*)");
 
     private static void parseAndWrite(File f1,
                                       StringBuilder builder) {
@@ -66,15 +71,26 @@ public class PdfParser {
             String etaj = rows[16].split(":")[1];
             write(builder, etaj);
 
-            add(roomNumber, builder, rows[23], 1);
+            Stack<Pattern> patterns = new Stack<>();
+            patterns.push(ownerNumber);
+            patterns.push(ownerNamePatter);
+            patterns.push(roomNumber);
 
-            add(ownerPatter, builder, rows[27], 1);
+            for (int i = 19; i < 50; i++) {
+                if (!patterns.empty()) {
+                    if (patterns.peek().matcher(rows[i]).find())
+                        add(patterns.pop(), builder, rows[i], 1);
+                } else {
+                    String ownerDate = rows[i];
+                    builder.append(ownerDate);
+                    break;
+                }
+            }
 
-            add(ownerNumber, builder, rows[31], 1);
-
-            String ownerDate = rows[32];
-            builder.append(ownerDate);
-
+            /*for (int i = 0; i < rows.length; i++) {
+                String s = rows[i];
+                System.out.println(i + " " + s);
+            }*/
             builder.append(System.lineSeparator());
             document.close();
 
@@ -111,10 +127,16 @@ public class PdfParser {
 
         StringBuilder builder = new StringBuilder(header)
                 .append(System.lineSeparator());
-        for (int i = 0; i < 4; i++) {
-            System.out.println(i);
-            parseAndWrite(ls.get(i), builder);
+        Long start = System.currentTimeMillis();
+        for (int i = 0; i < ls.size(); i++) {
+            File file = ls.get(i);
+            //if (file.getName().equals(
+              //      "obj_01ee2235-a9b0-4dd5-9f73-68fe65cb6129.pdf")) {
+                System.out.println(i + " of " + ls.size());
+                parseAndWrite(file, builder);
+            //}
         }
+        System.out.println("Exec " + (System.currentTimeMillis() - start));
 
         File output = new File("home7.csv");
 
