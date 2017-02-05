@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
+import preCompile.JsCompute;
 
 public class JsComputeTest {
 
@@ -18,5 +19,7 @@ public class JsComputeTest {
     Number evaluate = jsCompute.evaluate(map, "c = a + b^2", "c");
     Assert.assertEquals(7, evaluate.intValue());
   }
+
+
 
 }

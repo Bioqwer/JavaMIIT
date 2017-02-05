@@ -1,4 +1,4 @@
-package javaPreCompile;
+package preCompile;
 
 import java.util.Map;
 import javax.script.Invocable;
