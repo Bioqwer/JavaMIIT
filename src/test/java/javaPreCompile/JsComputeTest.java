@@ -16,8 +16,8 @@ public class JsComputeTest {
     map.put("a", 2);
     map.put("b", 3);
 
-    Number evaluate = jsCompute.evaluate(map, "c = a + b^2", "c");
-    Assert.assertEquals(7, evaluate.intValue());
+    Number evaluate = jsCompute.evaluate(map, "c = a + Math.pow(b,2)", "c");
+    Assert.assertEquals(11, evaluate.intValue());
   }
 
   @Test
