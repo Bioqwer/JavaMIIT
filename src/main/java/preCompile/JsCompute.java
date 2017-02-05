@@ -6,18 +6,19 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-public class JsCompute implements Compute<String, Number> {
+public class JsCompute implements Compute<Number, Number> {
 
 
   private static ScriptEngineManager manager = new ScriptEngineManager();
   private ScriptEngine engine = manager.getEngineByName("JavaScript");
 
   @Override
-  public Number evaluate(Map<String, String> variables, String formula, String varResult) {
+  public Number evaluate(Map<String, Number> variables, String formula, String varResult) {
     StringBuilder stringBuilder = new StringBuilder();
     variables.forEach((name, value) -> {
       stringBuilder.append(String.format("var %s = %s;%s", name, value, System.lineSeparator()));
     });
+
     Invocable inv = (Invocable) engine;
     // call function from script file
     Number result = null;
