@@ -44,6 +44,6 @@ class ShufleTest extends FunSuite with BeforeAndAfterEach with BeforeAndAfterAll
 
 
   private def getPathToResource(fileName:String) = {
-    this.getClass.getClassLoader.getResource(fileName).getPath
+    s"src/test/resource/$fileName"
   }
 }
