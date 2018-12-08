@@ -131,7 +131,7 @@ class BigFilesSorter(fileNameInput: String, buffer: Int, numSymbolsForPartition:
   def writeSortedValues(): Unit = {
     using(new PrintWriter(resultFileName)) { bufferedWriter =>
       partitionInfo.keys.toList.sorted.foreach { x =>
-        val partResultFileName = s"$tempDir\\$x.res"
+        val partResultFileName = s"$tempDir/$x.res"
         using(new BufferedReader(new FileReader(partResultFileName))) { bufferedReader =>
           var curLine: String = bufferedReader.readLine()
           while (curLine != null) {
