@@ -1,26 +1,38 @@
 import java.io.{File, FileWriter, PrintWriter}
 
+import scala.util.control.NonFatal
+
 object Utils {
 
-  def using[T <: {def close()}, R](resource: T)(block: T => R): R = {
+  /**
+    * https://medium.com/@dkomanov/scala-try-with-resources-735baad0fd7d
+    */
+  def using[T <: AutoCloseable, V](r: => T)(f: T => V): V = {
+    val resource: T = r
+    require(resource != null, "resource is null")
     var exception: Throwable = null
     try {
-      block(resource)
+      f(resource)
     } catch {
-      case e: Exception =>
+      case NonFatal(e) =>
         exception = e
         throw e
     } finally {
+      closeAndAddSuppressed(exception, resource)
+    }
+  }
+
+  private def closeAndAddSuppressed(e: Throwable,
+                                    resource: AutoCloseable): Unit = {
+    if (e != null) {
       try {
         resource.close()
       } catch {
-        case fe: Throwable =>
-          if (exception != null) {
-            exception.addSuppressed(fe)
-          } else {
-            throw fe
-          }
+        case NonFatal(suppressed) =>
+          e.addSuppressed(suppressed)
       }
+    } else {
+      resource.close()
     }
   }
 
